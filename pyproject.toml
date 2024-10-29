@@ -22,6 +22,19 @@ classifiers = [
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
 ]
 
+[project.optional-dependencies]
+data = [
+    "abc",
+    "typing",
+    "polars",
+    "numpy",
+    "multiprocessing"
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["stimulus*"]
+
 [project.scripts]
 stimulus-shuffle-csv = "stimulus.cli.shuffle_csv:main"
 stimulus-transform-csv = "stimulus.cli.transform_csv:main"
