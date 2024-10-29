@@ -7,7 +7,7 @@ packages = ["src/stimulus"]
 
 [project]
 name = "stimulus-py"
-version = "0.0.8"
+version = "0.0.10"
 authors = [
   { name="Mathys Grapotte", email="mathysgrapotte@gmail.com" },
   { name="Alessio Vignoli"},
@@ -44,6 +44,7 @@ stimulus-predict = "stimulus.cli.predict:run"
 stimulus-check-model = "stimulus.cli.check_model:run"
 stimulus-tuning = "stimulus.cli.tuning:run"
 stimulus-interpret-json = "stimulus.cli.interpret_json:run"
+stimulus-split-yaml = "stimulus.cli.split_yaml:run"
 [project.urls]
 Homepage = "https://github.com/mathysgrapotte/stimulus-py"
 Issues = "https://github.com/mathysgrapotte/stimulus-py/issues"

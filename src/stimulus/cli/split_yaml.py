@@ -3,10 +3,9 @@
 import argparse
 import yaml
 
-import jsonschema 
 from jsonschema import validate, ValidationError
 from typing import Union
-
+from stimulus.utils.yaml_experiment_utils import get_all_transform_dicts, dump_yaml_list_into_files
 
 def get_args():
 
@@ -29,12 +28,8 @@ def get_args():
 
     args = parser.parse_args()
     return args
-    
-    
 
-
-
-def main(config_yaml: str, out_dir_path: str) -> str:
+def val_yaml_config(config_yaml: str) -> str:
 
     # read the yaml experiment config and load it to dictionary
     yaml_config = {}
@@ -226,7 +221,11 @@ def main(config_yaml: str, out_dir_path: str) -> str:
             raise SystemError(f"Validation error at {path}: {e.message}")
     
 
+def run():
+    args = get_args()
+    val_yaml_config(args.yaml)
+    transform_dicts = get_all_transform_dicts(args.yaml)
+    dump_yaml_list_into_files(transform_dicts, args.out_dir, "transform")
 
 if __name__ == "__main__":
-    args = get_args()
-    main(args.yaml, args.out_dir)
+    run()

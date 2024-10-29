@@ -16,7 +16,7 @@ def get_args():
     
     parser = argparse.ArgumentParser(description="")
     parser.add_argument("-m", "--model", type=str, required=True, metavar="FILE", help='The model .py file')
-    parser.add_argument("-w", "--weight", type=str, required=True, nargs="+", metavar="FILE", help="Model weights .pt file")
+    parser.add_argument("-w", "--weight", type=str, required=True, nargs="+", metavar="FILE", help="Model weights .safetensors file")
     parser.add_argument("-me", "--metrics", type=str, required=True, nargs="+", metavar="FILE", help='The file path for the metrics file obtained during tuning')
     parser.add_argument("-ec", "--experiment_config", type=str, required=True, nargs="+", metavar="FILE", help='The experiment config used to modify the data.')
     parser.add_argument("-mc", "--model_config", type=str, required=True, nargs="+", metavar="FILE", help="The tune config file.")
@@ -129,7 +129,7 @@ def load_model(model_class: object, weight_path: str, mconfig_path: str) -> obje
 
     # load model
     model = model_class(**mconfig)
-    model = safe_load(model, weight_path, strict=True)
+    safe_load(model, weight_path, strict=True)
 
     return model
 
