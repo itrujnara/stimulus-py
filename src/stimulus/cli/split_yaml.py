@@ -23,7 +23,7 @@ def get_args():
     """
     
     parser = argparse.ArgumentParser(description="")
-    parser.add_argument("-j", "--yaml", type=str, required=True, metavar="FILE", help='The yaml config file that hold all transform - split - parameter info')
+    parser.add_argument("-y", "--yaml", type=str, required=True, metavar="FILE", help='The yaml config file that hold all transform - split - parameter info')
     parser.add_argument("-d", "--out_dir", type=str, required=False, nargs='?', const='./', default='./', metavar="DIR", help='The output dir where all he json are written to. Output Json will be called split-#[number].json transorm-#[number].json. Default -> ./')
 
     args = parser.parse_args()
@@ -224,7 +224,15 @@ def val_yaml_config(config_yaml: str) -> str:
 def run():
     args = get_args()
     val_yaml_config(args.yaml)
-    transform_dicts = get_all_transform_dicts(args.yaml)
+    with open(args.yaml, 'r') as conf_file:
+        loaded_yaml = yaml.safe_load(conf_file)
+
+    transform_dicts = []
+    for transform in loaded_yaml['transforms']:
+        transform_list = get_all_transform_dicts(transform)
+        for t in transform_list:
+            transform_dicts.append(t)
+    
     dump_yaml_list_into_files(transform_dicts, args.out_dir, "transform")
 
 if __name__ == "__main__":

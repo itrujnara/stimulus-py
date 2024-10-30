@@ -17,14 +17,14 @@ def get_length_of_params_dict(dict_to_split: dict) -> int:
     """
     for column in dict_to_split[TransformKeys.COLUMN_KEY]:
         for transformation in column[TransformKeys.TRANSFORMATIONS_KEY]:
-                if isinstance(transformation[TransformKeys.PARAMS_KEY], dict):
-                    # check for lists within the params dict
-                    for key, value in transformation[TransformKeys.PARAMS_KEY].items():
-                        if isinstance(value, list):
-                            # check that the list has more than one element
-                            if len(value) > 1:
-                                return len(value)
-    return 0
+            if isinstance(transformation[TransformKeys.PARAMS_KEY], dict):
+                # check for lists within the params dict
+                for key, value in transformation[TransformKeys.PARAMS_KEY].items():
+                    if isinstance(value, list):
+                        # check that the list has more than one element
+                        if len(value) > 1:
+                            return len(value)
+    return 1
 
 def get_transform_base_dict(dict_to_split: dict) -> dict:
     """
@@ -34,10 +34,10 @@ def get_transform_base_dict(dict_to_split: dict) -> dict:
     base_dict  = defaultdict(str, deepcopy(dict_to_split))
     # Reset all the params keys in the nested dicts
     for column in base_dict[TransformKeys.COLUMN_KEY]:
-            for transformation in column[TransformKeys.TRANSFORMATIONS_KEY]:
+        for transformation in column[TransformKeys.TRANSFORMATIONS_KEY]:
             # type check that transformation[PARAM_KEY] is a dictionary
-                if isinstance(transformation[TransformKeys.PARAMS_KEY], dict):
-                    transformation[TransformKeys.PARAMS_KEY] = {}
+            if isinstance(transformation[TransformKeys.PARAMS_KEY], dict):
+                transformation[TransformKeys.PARAMS_KEY] = {}
     return dict(base_dict)
 
 def split_transform_dict(dict_to_split: dict, base_dict: dict, split_index: int) -> dict: 
